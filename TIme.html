@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>时间进度条</title>
+  <style>
+    .container {
+      width: 80%;
+      height: 30px;
+      border: 2px solid #555;
+      margin: 50px auto;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .progress {
+      height: 100%;
+      background: linear-gradient(to right, #00bfff, #1e90ff);
+      width: 0%;
+      transition: width 1s linear;
+    }
+    .label {
+      text-align: center;
+      font-size: 18px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="progress" id="progressBar"></div>
+</div>
+<div class="label" id="label">Loading...</div>
+
+<script>
+  // 固定起始时间和结束时间
+  const startTime = new Date("2025-05-09T00:00:00");
+  const endTime = new Date("2025-06-20T00:00:00");
+
+  function updateProgress() {
+    const now = new Date();
+    const total = endTime - startTime;
+    const elapsed = now - startTime;
+
+    let percent = (elapsed / total) * 100;
+    percent = Math.min(Math.max(percent, 0), 100); // 限制在0~100%之间
+
+    document.getElementById("progressBar").style.width = percent + "%";
+    document.getElementById("label").innerText = `从 5月9日 到 6月20日\n进度：${percent.toFixed(2)}%（当前时间：${now.toLocaleString()}）`;
+  }
+
+  updateProgress(); // 立即运行一次
+  setInterval(updateProgress, 1000); // 每秒更新
+</script>
+
+</body>
+</html>
